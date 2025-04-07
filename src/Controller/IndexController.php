@@ -17,7 +17,13 @@ final class IndexController extends AbstractController
     #[Route('/about', name: 'app_about')]
     public function about(): Response
     {
-        return $this->render('index/about.html.twig');
+        $authorsNames = [
+            "Barry Francis", "Hannah Ballard", "Ralph Waters", "Barbara Figueroa"
+        ];
+
+        return $this->render('index/about.html.twig', [
+            'authors' => $authorsNames
+        ]);
     }
 
     #[Route('/contact', name: 'app_contact')]
@@ -26,7 +32,7 @@ final class IndexController extends AbstractController
         $name = "Guillaume";
 
         return $this->render('index/contact.html.twig', [
-            'name' => $name,
+            'name' => $name
         ]);
     }
 }

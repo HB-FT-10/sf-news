@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
       {% block title %}
         HB Corp
@@ -18,7 +19,7 @@
       {% endblock %}
     {% endblock %}
   </head>
-  <body>
+  <body class="min-h-screen">
     <header>{{ include('nav.html.twig') }}</header>
     {% block body %}
 

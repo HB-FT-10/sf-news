@@ -5,5 +5,16 @@
 {% endblock %}
 
 {% block body %}
-  <h1>À PROPOS</h1>
+  <div class="px-3 max-w-[900px] mx-auto">
+    <h1 class="text-4xl text-center my-10">À PROPOS</h1>
+    <p class="my-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repudiandae, vitae nostrum nam veniam reprehenderit fuga voluptas iure quasi ab, odit unde debitis commodi. Cupiditate vitae esse libero ipsam eaque illo.</p>
+    <p class="my-4">Reiciendis quia rem quas earum cum recusandae expedita consectetur fugit. Esse ab unde maxime et, cumque quaerat error provident consequatur obcaecati! Ad, sint amet! Quo dolore aperiam inventore enim rerum.</p>
+    <p class="my-4">Laudantium aliquid blanditiis cupiditate dolor rerum excepturi fugiat modi obcaecati, eius, optio voluptas odit ipsum, repudiandae vitae. Molestiae vitae rem inventore nihil totam odio amet, maxime sunt officiis sed ducimus.</p>
+
+    <ul>
+      {% for name in authors %}
+        <li>{{ name }}</li>
+      {% endfor %}
+    </ul>
+  </div>
 {% endblock %}

@@ -1,13 +1,13 @@
-<nav>
-  <ul class="flex gap-x-4">
+<nav class="z-5 bg-gray-700">
+  <ul class="flex flex-col sm:flex-row text-white justify-center">
     <li>
-      <a href="{{ path('homepage') }}">Accueil</a>
+      <a class="hover:bg-gray-900 transition-all py-4 px-5 block uppercase" href="{{ path('homepage') }}">Accueil</a>
     </li>
     <li>
-      <a href="{{ path('app_about') }}">À propos</a>
+      <a class="hover:bg-gray-900 transition-all py-4 px-5 block uppercase" href="{{ path('app_about') }}">À propos</a>
     </li>
     <li>
-      <a href="{{ path('app_contact') }}">Contact</a>
+      <a class="hover:bg-gray-900 transition-all py-4 px-5 block uppercase" href="{{ path('app_contact') }}">Contact</a>
     </li>
   </ul>
 </nav>
