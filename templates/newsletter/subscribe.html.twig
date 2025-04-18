@@ -5,7 +5,9 @@
 {% endblock %}
 
 {% block body %}
-  <h1>Inscription à la newsletter</h1>
+  <div class="max-w-[900px] mx-auto px-4">
+    <h1 class="text-4xl text-center mt-6">Inscription à la newsletter</h1>
 
-  {{ form(newsletterForm) }}
+    <div class="md:w-1/2 mx-auto">{{ form(newsletterForm) }}</div>
+  </div>
 {% endblock %}
