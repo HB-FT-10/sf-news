@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\ContactRequest;
+use App\Form\ContactType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -29,10 +31,11 @@ final class IndexController extends AbstractController
     #[Route('/contact', name: 'app_contact')]
     public function contact(): Response
     {
-        $name = "Guillaume";
+        $contactRequest = new ContactRequest();
+        $form = $this->createForm(ContactType::class, $contactRequest);
 
         return $this->render('index/contact.html.twig', [
-            'name' => $name
+            'contactForm' => $form
         ]);
     }
 }
