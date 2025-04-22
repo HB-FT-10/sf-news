@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ContactRequestRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ContactRequestRepository::class)]
 class ContactRequest
@@ -15,18 +16,25 @@ class ContactRequest
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank, Assert\NotNull]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank, Assert\NotNull]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Email]
+    #[Assert\NotBlank]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Choice(['info', 'partner', 'quote'])]
     private ?string $subject = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
     private ?string $message = null;
 
     public function getId(): ?int
