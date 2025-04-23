@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Newsletter;
 use App\Form\NewsletterType;
+use App\Mail\NewsletterSubscribedConfirmation;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,8 +14,11 @@ use Symfony\Component\Routing\Attribute\Route;
 final class NewsletterController extends AbstractController
 {
     #[Route('/newsletter/subscribe', name: 'app_newsletter_subscribe')]
-    public function subscribe(Request $request, EntityManagerInterface $em): Response
-    {
+    public function subscribe(
+        Request $request,
+        EntityManagerInterface $em,
+        NewsletterSubscribedConfirmation $confirmationService
+    ): Response {
         $newsletter = new Newsletter();
         $form = $this->createForm(NewsletterType::class, $newsletter);
 
@@ -25,6 +29,11 @@ final class NewsletterController extends AbstractController
             // persist + flush
             $em->persist($newsletter);
             $em->flush();
+
+            $confirmationService->sendEmail($newsletter);
+
+            // Ajout d'un message de succès (notification)
+            $this->addFlash('success', 'Votre inscription a bien été prise en compte, un email de confirmation vous a été envoyé');
         }
 
         return $this->render('newsletter/subscribe.html.twig', [
