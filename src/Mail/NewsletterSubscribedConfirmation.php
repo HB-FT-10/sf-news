@@ -8,8 +8,10 @@ use Symfony\Component\Mime\Email;
 
 class NewsletterSubscribedConfirmation
 {
-    public function __construct(private MailerInterface $mailer)
-    {
+    public function __construct(
+        private MailerInterface $mailer,
+        private string $adminEmail
+    ) {
     }
 
     public function sendEmail(Newsletter $newsletter): void
@@ -17,7 +19,7 @@ class NewsletterSubscribedConfirmation
         // envoi d'un email de confirmation
         // Construction d'un email
         $email = (new Email())
-        ->from('admin@hbft10.fr')
+        ->from($this->adminEmail)
         ->to($newsletter->getEmail())
         ->subject('Bienvenue !')
         ->text('Votre email ' . $newsletter->getEmail() . ' a bien été enregistré dans notre liste de diffusion.')
