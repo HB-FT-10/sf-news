@@ -13,6 +13,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class AppFixtures extends Fixture
 {
     private const NB_ARTICLES = 40;
+    private const NB_USERS = 5;
     private const CATEGORY_NAMES = ['PHP', 'Symfony', 'Rust', 'Typescript', 'Angular', 'Javascript'];
 
     public function __construct(
@@ -35,6 +36,29 @@ class AppFixtures extends Fixture
             $categories[] = $category;
         }
 
+        // --- USERS -----------------------------------------------------------------------
+        $users = [];
+
+        for ($i = 0; $i < self::NB_USERS; $i++) {
+            $user = new User();
+            $user
+                ->setEmail("regular$i@user.com")
+                ->setPassword($this->hasher->hashPassword($user, 'test'));
+
+            $manager->persist($user);
+
+            $users[] = $user;
+        }
+
+        $admin = new User();
+        $admin
+            ->setEmail("admin@user.com")
+            ->setRoles(['ROLE_ADMIN'])
+            ->setPassword($this->hasher->hashPassword($user, 'admin'));
+
+        $manager->persist($admin);
+        $users[] = $admin;
+
         // --- ARTICLES ---------------------------------------------------------------------
         for ($i = 0; $i < self::NB_ARTICLES; $i++) {
             $article = new Article();
@@ -44,26 +68,11 @@ class AppFixtures extends Fixture
             ->setContent($faker->realTextBetween(400, 750))
             ->setCreatedAt($faker->dateTimeBetween('-2 years'))
             ->setVisible($faker->boolean(80))
-            ->setCategory($faker->randomElement($categories));
+            ->setCategory($faker->randomElement($categories))
+            ->setAuthor($faker->randomElement($users));
 
             $manager->persist($article);
         }
-
-        // --- USERS -----------------------------------------------------------------------
-        $user = new User();
-        $user
-            ->setEmail("regular@user.com")
-            ->setPassword($this->hasher->hashPassword($user, 'test'));
-
-        $manager->persist($user);
-
-        $admin = new User();
-        $admin
-            ->setEmail("admin@user.com")
-            ->setRoles(['ROLE_ADMIN'])
-            ->setPassword($this->hasher->hashPassword($user, 'admin'));
-
-        $manager->persist($admin);
 
         $manager->flush();
     }
