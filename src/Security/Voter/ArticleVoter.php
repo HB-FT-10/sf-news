@@ -25,6 +25,11 @@ final class ArticleVoter extends Voter
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
+        $article = $subject;
+
+        if (!$article instanceof Article) {
+            return false;
+        }
 
         // if the user is anonymous, do not grant access
         if (!$user instanceof UserInterface) {
@@ -38,7 +43,7 @@ final class ArticleVoter extends Voter
 
         if ($attribute === self::EDIT) {
             // Vérifier que l'auteur correspond bien à l'utilisateur connecté
-            return $subject->getAuthor() === $user;
+            return $article->getAuthor() === $user;
         }
 
         return false;
