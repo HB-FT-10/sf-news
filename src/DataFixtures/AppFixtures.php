@@ -16,13 +16,14 @@ class AppFixtures extends Fixture
     private const CATEGORY_NAMES = ['PHP', 'Symfony', 'Rust', 'Typescript', 'Angular', 'Javascript'];
 
     public function __construct(
-        private UserPasswordHasherInterface $hasher
+        private UserPasswordHasherInterface $hasher,
+        private string $lang
     ) {
     }
 
     public function load(ObjectManager $manager): void
     {
-        $faker = Factory::create('zh_TW');
+        $faker = Factory::create($this->lang);
 
         // --- CATEGORIES -------------------------------------------------------------------
         $categories = [];
