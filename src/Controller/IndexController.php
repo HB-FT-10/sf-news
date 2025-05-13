@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ContactRequest;
 use App\Form\ContactType;
+use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,9 +14,11 @@ use Symfony\Component\Routing\Attribute\Route;
 final class IndexController extends AbstractController
 {
     #[Route('/', name: 'homepage')]
-    public function home(): Response
+    public function home(ArticleRepository $articleRepository): Response
     {
-        return $this->render('index/home.html.twig');
+        $articles = $articleRepository->findHomepageArticles();
+
+        return $this->render('index/home.html.twig', ['articles' => $articles]);
     }
 
     #[Route('/about', name: 'app_about')]

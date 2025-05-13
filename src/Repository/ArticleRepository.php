@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,28 +17,38 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-//    /**
-//     * @return Article[] Returns an array of Article objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Article[]
+     */
+    public function findHomepageArticles(): array
+    {
+        /*
+        SELECT * FROM article
+        WHERE created_at > DATE_SUB(CURRENT_DATE(), 1, 'YEAR')
+        AND visible = 1
+        ORDER BY created_at DESC
+        LIMIT 10
+        */
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.createdAt > :lastYear')
+            ->andWhere('a.visible = :visible')
+            ->setParameter('lastYear', (new DateTime())->modify('-1 year'))
+            ->setParameter('visible', true)
+            ->orderBy('a.createdAt', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Article
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * @return Article[]
+     */
+    public function findAllWithCategories(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->join('a.category', 'c')
+            ->addSelect('c')
+            ->getQuery()
+            ->getResult();
+    }
 }

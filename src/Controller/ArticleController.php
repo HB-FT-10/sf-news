@@ -14,7 +14,7 @@ final class ArticleController extends AbstractController
     #[Route('/articles', name: 'articles_list')]
     public function list(ArticleRepository $articleRepository): Response
     {
-        $articles = $articleRepository->findAll();
+        $articles = $articleRepository->findAllWithCategories();
 
         return $this->render('articles/list.html.twig', [
             'articles' => $articles
