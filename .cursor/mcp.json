@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "github-repo": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN=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",
+        "ghcr.io/github/github-mcp-server"
+      ]
+    }
+  }
+}
