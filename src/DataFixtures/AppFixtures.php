@@ -66,7 +66,7 @@ class AppFixtures extends Fixture
             ->setTitle($faker->realText(15))
             ->setDescription($faker->text(150))
             ->setContent($faker->realTextBetween(400, 750))
-            ->setCreatedAt($faker->dateTimeBetween('-2 years'))
+            // ->setCreatedAt($faker->dateTimeBetween('-2 years'))
             ->setVisible($faker->boolean(80))
             ->setCategory($faker->randomElement($categories))
             ->setAuthor($faker->randomElement($users));
