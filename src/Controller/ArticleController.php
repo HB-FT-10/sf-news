@@ -42,8 +42,7 @@ final class ArticleController extends AbstractController
         $articles = $articleRepository->findBy([], limit: 10, offset: 0);
 
         return $this->json($articles, context: [
-            'groups' => ['articles:read'],
-            DateTimeNormalizer::FORMAT_KEY => 'd/m/Y'
+            'groups' => ['articles:read']
         ]);
     }
 }
