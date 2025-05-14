@@ -6,6 +6,7 @@ use App\Repository\ArticleRepository;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -14,15 +15,19 @@ class Article
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('articles:read')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('articles:read')]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups('articles:read')]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('articles:read')]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -33,6 +38,7 @@ class Article
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('articles:read')]
     private ?Category $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
